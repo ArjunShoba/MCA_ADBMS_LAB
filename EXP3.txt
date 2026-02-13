@@ -1,0 +1,84 @@
+-- Create Customer_Lab1 Table
+CREATE TABLE Customer_Lab1 (
+    CustomerID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    City VARCHAR(50)
+);
+
+-- Create Product_Lab1 Table
+CREATE TABLE Product_Lab1 (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(50),
+    Price NUMBER(10,2),
+    CustomerID INT,
+    FOREIGN KEY (CustomerID) REFERENCES Customer_Lab1(CustomerID)
+);
+
+-- Insert rows into Customer_Lab1
+INSERT INTO Customer_Lab1 VALUES (1, 'Alex', 'Kochi');
+INSERT INTO Customer_Lab1 VALUES (2, 'Babu', 'Trivandrum');
+INSERT INTO Customer_Lab1 VALUES (3, 'Divya', 'Kollam');
+INSERT INTO Customer_Lab1 VALUES (4, 'Siva', 'Kottayam');
+INSERT INTO Customer_Lab1 VALUES (5, 'Sandhya', 'Trivandrum');
+
+-- Insert rows into Product_Lab1
+INSERT INTO Product_Lab1 VALUES (101, 'Laptop', 55000, 1);
+INSERT INTO Product_Lab1 VALUES (102, 'Mobile', 15000, 2);
+INSERT INTO Product_Lab1 VALUES (103, 'Tablet', 20000, 3);
+INSERT INTO Product_Lab1 VALUES (104, 'Printer', 10000, 4);
+INSERT INTO Product_Lab1 VALUES (105, 'Monitor', 12000, 5);
+
+-- 1. Select all products
+SELECT * FROM Product_Lab1;
+
+-- 2. Select customer names and cities
+SELECT Name, City FROM Customer_Lab1;
+
+-- 3. Display customers from the city "Kochi"
+SELECT * FROM Customer_Lab1 WHERE City = 'Kochi';
+
+-- 4. Display products priced above 15000
+SELECT * FROM Product_Lab1 WHERE Price > 15000;
+
+-- 5. Total number of products per customer
+SELECT CustomerID, COUNT(*) AS TotalProducts
+FROM Product_Lab1
+GROUP BY CustomerID;
+
+-- 6. Display average price of products per customer
+SELECT CustomerID, AVG(Price) AS AvgPrice
+FROM Product_Lab1
+GROUP BY CustomerID;
+
+-- 7. Display customers whose average product price > 12000
+SELECT CustomerID, AVG(Price) AS AvgPrice
+FROM Product_Lab1
+GROUP BY CustomerID
+HAVING AVG(Price) > 12000;
+
+-- 8. List products in ascending order of price
+SELECT * FROM Product_Lab1
+ORDER BY Price ASC;
+
+-- 9. List customers in descending order of name
+SELECT * FROM Customer_Lab1
+ORDER BY Name DESC;
+
+-- 10. Get customers who bought a product priced above 15000
+SELECT * FROM Customer_Lab1
+WHERE CustomerID IN (
+    SELECT CustomerID FROM Product_Lab1 WHERE Price > 15000
+);
+
+-- 11. Get product(s) with the maximum price
+SELECT * FROM Product_Lab1
+WHERE Price = (SELECT MAX(Price) FROM Product_Lab1);
+
+-- 12. Create a view showing product and customer name
+CREATE VIEW ProductCustomer_Lab1 AS
+SELECT p.ProductName, p.Price, c.Name AS CustomerName
+FROM Product_Lab1 p
+JOIN Customer_Lab1 c ON p.CustomerID = c.CustomerID;
+
+-- View output
+SELECT * FROM ProductCustomer_Lab1;

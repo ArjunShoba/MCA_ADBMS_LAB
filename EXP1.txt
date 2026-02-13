@@ -1,0 +1,83 @@
+SQL> connect
+Enter user-name: system
+Enter password:
+Connected.
+SQL> CREATE TABLE Student(
+  2  StudentID NUMBER(5) PRIMARY KEY,
+  3  StiudentName VARCHAR(50),Age NUMBER(2),
+  4  );
+)
+*
+ERROR at line 4:
+ORA-00904: : invalid identifier
+
+
+SQL> CREATE TABLE Studentnew(
+  2  StudentID NUMBER(5) PRIMARY KEY,
+  3  StudentName VARCHAR(50),Age NUMBER(2),
+  4  Department VARCHAR(20));
+
+Table created.
+
+SQL> desc Studentnew
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                 NOT NULL NUMBER(5)
+ STUDENTNAME                                        VARCHAR2(50)
+ AGE                                                NUMBER(2)
+ DEPARTMENT                                         VARCHAR2(20)
+
+SQL> ALTER TABLE Student ADD Email VARCHAR(50);
+
+Table altered.
+
+SQL> RENAME Course to Course_Details;
+RENAME Course to Course_Details
+*
+ERROR at line 1:
+ORA-04043: object COURSE does not exist
+
+
+SQL> ALTER TABLE Student ADD Course VARCHAR(50);
+
+Table altered.
+
+SQL> desc Studentnew
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENTID                                 NOT NULL NUMBER(5)
+ STUDENTNAME                                        VARCHAR2(50)
+ AGE                                                NUMBER(2)
+ DEPARTMENT                                         VARCHAR2(20)
+
+SQL> RENAME Course to Course_Details;
+RENAME Course to Course_Details
+*
+ERROR at line 1:
+ORA-04043: object COURSE does not exist
+
+
+SQL> RENAME Studentnew TO Studentnewi;
+
+Table renamed.
+
+SQL> TRUNCATE TABLE Studentnewi;
+
+Table truncated.
+
+SQL> DROP TABLE Studentnewi;
+
+Table dropped.
+
+SQL> desc Studentnewi;
+ERROR:
+ORA-04043: object Studentnewi does not exist
+
+
+SQL> CREATE TABLE Students;
+CREATE TABLE Students
+                    *
+ERROR at line 1:
+ORA-00906: missing left parenthesis
+
+SQL>
